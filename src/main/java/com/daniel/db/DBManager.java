@@ -45,7 +45,8 @@ public class DBManager {
     
     public Connection openConnection() throws SQLException
     {
-        setConnection(DriverManager.getConnection("jdbc:mysql://localhost/maps", "root", "root"));
+       // setConnection(DriverManager.getConnection("jdbc:mysql://localhost/maps", "root", "root"));
+        setConnection(DriverManager.getConnection("jdbc:mysql://127.13.96.2:3306/webmapsenderserver", "admin8pX8uda", "XQLPT_7KF33G"));
         return getConnection();
         
     }
