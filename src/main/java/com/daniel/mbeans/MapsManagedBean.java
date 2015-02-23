@@ -5,7 +5,6 @@
  */
 package com.daniel.mbeans;
 
-import com.daniel.websocket.ClientSocket;
 import com.vano.clientserver.NavigationData;
 import com.daniel.db.DBManager;
 import java.io.IOException;
@@ -42,7 +41,6 @@ public class MapsManagedBean implements Serializable {
     private Part file;
     ImageManager im = new ImageManager();
     DBManager db;
-    ClientSocket clientSoc;
     public ObjectOutputStream oos;
     public ObjectInputStream ois;
     private String errorString;
@@ -120,14 +118,7 @@ public class MapsManagedBean implements Serializable {
        return "result";
     }
     
-    public boolean checkForSocketConnection()
-    {
-        if (clientSoc.getClientSocket().isConnected())
-        {
-            checkForConnection=true;
-        }
-            return checkForConnection;   
-    }
+
     
     
 
