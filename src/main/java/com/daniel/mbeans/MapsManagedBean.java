@@ -41,10 +41,8 @@ public class MapsManagedBean implements Serializable {
     private Part file;
     ImageManager im = new ImageManager();
     DBManager db;
-    public ObjectOutputStream oos;
-    public ObjectInputStream ois;
     private String errorString;
-    private boolean checkForConnection=false;
+    private boolean objectsent=false;
     public static final String WiFiNavigatorUri = "http://wifinavigatorapp-municipalpayment.rhcloud.com/WiFiNavigatorSite/downloadPlan";
     int NetworkConnectionTimeout_ms = 500000;
     
@@ -53,16 +51,11 @@ public class MapsManagedBean implements Serializable {
     public void serializeObjectNavigationData() throws IOException, SQLException
     {
         db =new DBManager();
-        /*clientSoc = new ClientSocket();
-        clientSoc.connectToServer();
-        */
                   
             try
             {
-           // oos= new ObjectOutputStream(clientSoc.getClientSocket().getOutputStream());
-           // ois = new ObjectInputStream(clientSoc.getClientSocket().getInputStream());
-            NavigationData nd = db.selectDataFromDB(naviData, getFile());
-            sendNavigationData(nd);
+            	NavigationData nd = db.selectDataFromDB(naviData, getFile());
+            	sendNavigationData(nd);
             }
             catch(Exception e)
             {
@@ -70,7 +63,7 @@ public class MapsManagedBean implements Serializable {
             }
             finally
             {
-                oos.close();
+                //Добавить логи
             }
         
        
@@ -78,44 +71,45 @@ public class MapsManagedBean implements Serializable {
     }
     
     private void sendNavigationData(NavigationData nd) throws IOException{
-    HttpParams params = new BasicHttpParams();    
-    HttpConnectionParams.setStaleCheckingEnabled(params, false);
-    HttpConnectionParams.setConnectionTimeout(params, NetworkConnectionTimeout_ms);
-    HttpConnectionParams.setSoTimeout(params, NetworkConnectionTimeout_ms);
-    DefaultHttpClient httpClient = new DefaultHttpClient(params);
+	    HttpParams params = new BasicHttpParams();    
+	    HttpConnectionParams.setStaleCheckingEnabled(params, false);
+	    HttpConnectionParams.setConnectionTimeout(params, NetworkConnectionTimeout_ms);
+	    HttpConnectionParams.setSoTimeout(params, NetworkConnectionTimeout_ms);
+	    DefaultHttpClient httpClient = new DefaultHttpClient(params);
 
     // create post method
-    HttpPost postMethod = new HttpPost(WiFiNavigatorUri);
+	    HttpPost postMethod = new HttpPost(WiFiNavigatorUri);
 
     // create request entity
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ObjectOutputStream oos = new ObjectOutputStream(baos);
-    oos.writeObject(nd);
-    ByteArrayEntity req_entity = new ByteArrayEntity(baos.toByteArray());
-    req_entity.setContentType("application/octet-stream");
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    ObjectOutputStream oos = new ObjectOutputStream(baos);
+	    oos.writeObject(nd);
+	    ByteArrayEntity req_entity = new ByteArrayEntity(baos.toByteArray());
+	    req_entity.setContentType("application/octet-stream");
 
     // associating entity with method
-    postMethod.setEntity(req_entity);
-    httpClient.execute(postMethod);
+	    postMethod.setEntity(req_entity);
+	    httpClient.execute(postMethod);
     }
     
 
     
     public String uploadData() throws IOException, SQLException, SocketException, SocketTimeoutException
     {
-    //   if((getFile()!=null)&(naviData!=null))
-    //   {
            try
            {
                serializeObjectNavigationData();
+               objectsent=true;
            }
             catch(Exception e)
             {
-                e.printStackTrace();
-                throw new NullPointerException();
+                errorString=e.getMessage();
+                
             }
-    //   }
-       return "result";
+       if(objectsent)
+           return "result.xhtml";
+       else
+    	   return "errorPage.xhtml";
     }
     
 
@@ -164,24 +158,6 @@ public class MapsManagedBean implements Serializable {
         this.errorString = errorString;
     }
 
-    /**
-     * @return the checkForConnection
-     */
-    public boolean isCheckForConnection() {
-        return checkForConnection;
-    }
-
-    /**
-     * @param checkForConnection the checkForConnection to set
-     */
-    public void setCheckForConnection(boolean checkForConnection) {
-        this.checkForConnection = checkForConnection;
-    }
-
-   
-
-   
-
-    
+      
     
 }
