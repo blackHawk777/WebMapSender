@@ -5,24 +5,35 @@
  */
 package com.daniel.mbeans;
 
-import com.vano.clientserver.NavigationData;
-import com.daniel.db.DBManager;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.sql.SQLException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.servlet.http.Part;
-import com.daniel.processimage.ImageManager;
-import java.io.ByteArrayOutputStream;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
+
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.*;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.primefaces.component.api.UIData;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.SelectEvent;
+
+import com.daniel.db.DBManager;
+import com.daniel.processimage.ImageManager;
+import com.vano.clientserver.NavigationData;
+import com.vano.clientserver.Table;
 
 
 
@@ -35,25 +46,44 @@ import org.apache.http.params.*;
 @RequestScoped
 public class MapsManagedBean implements Serializable {
 
+	
+	public MapsManagedBean() throws SQLException
+	{
+		String tableDBName = new String();
+		db = new DBManager();
+		naviData = new NavigationData();
+	}
+
     
-    private NavigationData naviData = new NavigationData();
-   
+    private NavigationData naviData;
+    DBManager db;
+    DataTable tb;
+    String tableDBName;
+    private Table tableSelected;
     private Part file;
     ImageManager im = new ImageManager();
-    DBManager db;
     private String errorString;
     private boolean objectsent=false;
     public static final String WiFiNavigatorUri = "http://wifinavigatorapp-municipalpayment.rhcloud.com/WiFiNavigatorSite/downloadPlan";
     int NetworkConnectionTimeout_ms = 500000;
+    private ArrayList<Table> tables = new ArrayList<Table>();
     
+    
+  
    
+    public String nameOfTable()
+    {
+    	String name="";
+    	name = String.valueOf(tableSelected.getTable());
+    	return name;
+    }
     
     public void serializeObjectNavigationData() throws IOException, SQLException
     {
-        db =new DBManager();
-                  
+          
             try
             {
+            	//naviData.setTableName(nameOfTable());
             	NavigationData nd = db.selectDataFromDB(naviData, getFile());
             	sendNavigationData(nd);
             }
@@ -121,12 +151,14 @@ public class MapsManagedBean implements Serializable {
      */
     public NavigationData getNaviData() {
         return naviData;
+        
     }
 
     /**
      * @param naviData the naviData to set
+     * @throws SQLException 
      */
-    public void setNaviData(NavigationData naviData) {
+    public void setNaviData(NavigationData naviData) throws SQLException {
         this.naviData = naviData;
     }
 
@@ -157,6 +189,31 @@ public class MapsManagedBean implements Serializable {
     public void setErrorString(String errorString) {
         this.errorString = errorString;
     }
+
+
+	public ArrayList<Table> getTables() throws SQLException {
+		tables=db.fillListOfTables();
+		return tables;
+	}
+
+
+	public void setTables(ArrayList<Table> tables) {
+		this.tables = tables;
+	}
+
+
+	public Table getTableSelected() {
+		return tableSelected;
+	}
+
+
+	public void setTableSelected(Table tableSelected) {
+		this.tableSelected = tableSelected;
+	}
+
+
+
+	
 
       
     

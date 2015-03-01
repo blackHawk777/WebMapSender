@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
     <h:head>
         <title>Send Map to OpenShift </title>
     </h:head>
@@ -15,7 +17,21 @@
         
             <p:outputLabel id="showHelp" value="Таблица:"/>
             <p:inputText id="dataToServer" required="true" requiredMessage="Укажите название таблицы"  value="#{mapBean.naviData.tableName}"/>
-            <p:message for="dataToServer" display="text"/>
+            <br/>
+            
+            <!-- 
+            <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table.id}" >
+            <p:column headerText="Название таблицы">
+            	<h:outputText value="#{table.table}">
+            	</h:outputText>
+            </p:column>
+          
+            </p:dataTable>
+            -->
+            
+            
+            
+            <p:message for="dataToServer" display="text"/> 
  
             <br></br>
             <br></br>  

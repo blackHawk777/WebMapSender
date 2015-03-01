@@ -7,6 +7,8 @@ package com.daniel.db;
 
 
 import com.vano.clientserver.NavigationData;
+import com.vano.clientserver.Table;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,9 +16,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javax.servlet.http.Part;
+
 import com.daniel.processimage.ImageManager;
+import com.mysql.jdbc.DatabaseMetaData;
 import com.mysql.jdbc.Driver;
+
 import java.sql.ResultSetMetaData;
 
 /**
@@ -34,6 +40,7 @@ public class DBManager {
     public ArrayList<Integer> signals2 = new ArrayList<Integer>();
     int columnsCount=0;
     public ImageManager im = new ImageManager();
+    public ArrayList<Table> listOfTables = new ArrayList<Table>();
    
   
     public DBManager() throws SQLException
@@ -42,6 +49,17 @@ public class DBManager {
     }
     
     
+    public ArrayList<Table> fillListOfTables() throws SQLException
+    {
+    	DatabaseMetaData dmd =(DatabaseMetaData) openConnection().getMetaData();
+    	ResultSet setOfTables = dmd.getTables("", "", "%", null);
+    	while (setOfTables.next())
+    	{
+    		listOfTables.add(new Table(String.valueOf(setOfTables.getObject(3))));
+    	}
+    	setOfTables.close();
+    	return listOfTables;
+    }
     
     public Connection openConnection() throws SQLException
     {

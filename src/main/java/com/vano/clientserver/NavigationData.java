@@ -88,4 +88,6 @@ public class NavigationData implements Serializable {
     public void setPlaceMap(byte[] placeMap) {
         this.placeMap = placeMap;
     }
+
+		
 }
