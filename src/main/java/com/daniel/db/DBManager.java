@@ -52,7 +52,8 @@ public class DBManager {
     public ArrayList<Table> fillListOfTables() throws SQLException
     {
     	DatabaseMetaData dmd =(DatabaseMetaData) openConnection().getMetaData();
-    	ResultSet setOfTables = dmd.getTables("", "", "%", null);
+    	//ResultSet setOfTables = dmd.getTables("", "", "%", null);
+    	ResultSet setOfTables = dmd.getTables(null, null, null, null);
     	while (setOfTables.next())
     	{
     		listOfTables.add(new Table(String.valueOf(setOfTables.getObject(3))));

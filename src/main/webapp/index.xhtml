@@ -16,11 +16,11 @@
             <br></br>
         
             <p:outputLabel id="showHelp" value="Таблица:"/>
-            <p:inputText id="dataToServer" required="true" requiredMessage="Укажите название таблицы"  value="#{mapBean.naviData.tableName}"/>
+            <p:inputText id="dataToServer" required="true" requiredMessage="Укажите название таблицы"  value="#{mapBean.naviData.tableName}"/> 
             <br/>
             
-            <!-- 
-            <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table.id}" >
+            
+           <!-- <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table.id}" >
             <p:column headerText="Название таблицы">
             	<h:outputText value="#{table.table}">
             	</h:outputText>
@@ -28,9 +28,7 @@
           
             </p:dataTable>
             -->
-            
-            
-            
+                  
             <p:message for="dataToServer" display="text"/> 
  
             <br></br>
