@@ -20,7 +20,7 @@
             <br/>
             
             
-            <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table.id}" >
+            <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table}" >
             <p:column headerText="Название таблицы">
             	<h:outputText value="#{table.table}">
             	</h:outputText>

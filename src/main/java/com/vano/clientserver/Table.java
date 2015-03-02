@@ -10,10 +10,8 @@ public class Table implements Serializable {
 
 	public Table(String table)
 	{
-		this.id=Incrementator.id++;
 		this.table=table;
 	}
-
 	
 	public String getTable() {
 		return table;

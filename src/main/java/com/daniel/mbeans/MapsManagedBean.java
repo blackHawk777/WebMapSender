@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
@@ -43,7 +45,7 @@ import com.vano.clientserver.Table;
  * @author Admin
  */
 @ManagedBean(name = "mapBean")
-@RequestScoped
+@ViewScoped
 public class MapsManagedBean implements Serializable {
 
 	
