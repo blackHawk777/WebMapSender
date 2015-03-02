@@ -51,13 +51,12 @@ public class MapsManagedBean implements Serializable {
 	{
 		db = new DBManager();
 		naviData = new NavigationData();
-		//fillListOfTables();
+		fillListOfTables();
 	}
 
     
     private NavigationData naviData;
     DBManager db;
-    DataTable tb;
     private Table tableSelected;
     private Part file;
     ImageManager im = new ImageManager();
@@ -76,10 +75,9 @@ public class MapsManagedBean implements Serializable {
     public String nameOfTable()
     {
     	String name="";
-    	name = String.valueOf(tableSelected.getTable());
+    	name = String.valueOf(getTableSelected().getTable());
     	return name;
     }
-    
     
 
     public void serializeObjectNavigationData() throws IOException, SQLException
@@ -87,7 +85,7 @@ public class MapsManagedBean implements Serializable {
           
             try
             {
-            	//naviData.setTableName(nameOfTable());
+            	naviData.setTableName(nameOfTable());
             	NavigationData nd = db.selectDataFromDB(naviData, getFile());
             	sendNavigationData(nd);
             }
@@ -197,14 +195,7 @@ public class MapsManagedBean implements Serializable {
 
 
 
-	public Table getTableSelected() {
-		return tableSelected;
-	}
 
-
-	public void setTableSelected(Table tableSelected) {
-		this.tableSelected = tableSelected;
-	}
 
 	public ArrayList<Table> getTables() {
 		return tables;
@@ -212,6 +203,14 @@ public class MapsManagedBean implements Serializable {
 
 	public void setTables(ArrayList<Table> tables) {
 		this.tables = tables;
+	}
+
+	public Table getTableSelected() {
+		return tableSelected;
+	}
+
+	public void setTableSelected(Table tableSelected) {
+		this.tableSelected = tableSelected;
 	}
 
 

@@ -2,6 +2,7 @@ package com.vano.clientserver;
 
 import java.io.Serializable;
 
+
 public class Table implements Serializable {
 
 	private long id;
@@ -9,8 +10,10 @@ public class Table implements Serializable {
 
 	public Table(String table)
 	{
+		this.id=Incrementator.id++;
 		this.table=table;
 	}
+
 	
 	public String getTable() {
 		return table;
@@ -27,6 +30,8 @@ public class Table implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+
 
 
 }
