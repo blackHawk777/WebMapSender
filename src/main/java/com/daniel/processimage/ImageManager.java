@@ -34,18 +34,6 @@ HttpPost post = new HttpPost("uri");
     
      public byte[] readImage(Part file) throws FileNotFoundException, IOException
     {
-        /*InputStream is = file.getInputStream();
-        BufferedImage bufferedImage  = ImageIO.read(is);
-	ByteArrayOutputStream byteMas = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(byteMas);
-        oos.writeObject(bufferedImage);
-        byteEntity = new ByteArrayEntity(byteMas.toByteArray());
-        byteEntity.setContentType(MediaType.MULTIPART_FORM_DATA);
-        post.setEntity(byteEntity);
-        byteEntity.writeTo(byteMas);
-        byteMas.flush();
-        byte[] imageInBytes = byteMas.toByteArray();
-        byteMas.close();*/
         InputStream is = file.getInputStream();
         BufferedImage bufferedImage  = ImageIO.read(is);
 	ByteArrayOutputStream byteMas = new ByteArrayOutputStream();

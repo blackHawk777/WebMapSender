@@ -22,16 +22,20 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.SelectEvent;
 
+import com.daniel.data.DataSender;
 import com.daniel.db.DBManager;
 import com.daniel.processimage.ImageManager;
 import com.vano.clientserver.NavigationData;
@@ -51,6 +55,7 @@ public class MapsManagedBean implements Serializable {
 	
 	public MapsManagedBean() throws SQLException
 	{
+		ds = new DataSender();
 		db = new DBManager();
 		naviData = new NavigationData();
 		fillListOfTables();
@@ -59,6 +64,7 @@ public class MapsManagedBean implements Serializable {
     
     private NavigationData naviData;
     DBManager db;
+    DataSender ds;
     private Table tableSelected;
     private Part file;
     ImageManager im = new ImageManager();
@@ -89,22 +95,18 @@ public class MapsManagedBean implements Serializable {
             {
             	naviData.setTableName(nameOfTable());
             	NavigationData nd = db.selectDataFromDB(naviData, getFile());
-            	sendNavigationData(nd);
+            	ds.sendNavigationData(nd);
+            	
             }
             catch(Exception e)
             {
-                e.printStackTrace();
+               e.printStackTrace();
             }
-            finally
-            {
-                //Добавить логи
-            }
-        
-       
         
     }
     
-    private void sendNavigationData(NavigationData nd) throws IOException{
+    
+   /* private void sendNavigationData(NavigationData nd) throws IOException{
 	    HttpParams params = new BasicHttpParams();    
 	    HttpConnectionParams.setStaleCheckingEnabled(params, false);
 	    HttpConnectionParams.setConnectionTimeout(params, NetworkConnectionTimeout_ms);
@@ -125,6 +127,8 @@ public class MapsManagedBean implements Serializable {
 	    postMethod.setEntity(req_entity);
 	    httpClient.execute(postMethod);
     }
+    */
+    
     
 
     
@@ -137,7 +141,7 @@ public class MapsManagedBean implements Serializable {
            }
             catch(Exception e)
             {
-                errorString=e.getMessage();
+            	e.printStackTrace();
                 
             }
        if(objectsent)
