@@ -7,17 +7,61 @@
       
     <h:head>
         <title>Отправление карты помещения</title>
+        <h:outputStylesheet library="css" name="style.css" />
+        <h:outputScript library="js" name="js/cufon-yui.js" />
+        <h:outputScript library="js" name="js/cufon-replace.js"/>
+        <h:outputScript library="js" name="js/Myriad_Pro_300.font.js" />
     </h:head>
-    <h:body>
-        <h:form enctype="multipart/form-data" >
-            <p:outputLabel value="Выберите карту для передачи на сервер"/>
+    
+    <h:body id="page1">
+<div class="tail-top">
+  <div class="tail-bottom">
+    <div class="body-bg">
+      <!-- HEADER -->
+      <div id="header">
+        <div class="extra"> <h:graphicImage library="images" name="header-img.jpg"/> </div>
+        <div class="row-1">
+          <div class="fleft"><a href="#"> <h:graphicImage library="images" name="logo.gif" /> </a></div>
+          <div class="fright"><h:graphicImage library="images" name="phone.gif"/></div>
+        </div>
+        <div class="row-2">
+          <ul>
+            <li class="m1"><a href="index.xhtml" class="active">На главную</a></li>
+            <li class="m2"><a href="about-us.xhtml">О сайте</a></li>
+            <li class="m3"><a href="support.xhtml">Поддержка</a></li>
+            <li class="m4"><a href="contact.xhtml">Контакты</a></li>
+            <li class="m5"><a href="sitemap.xhtml">Карта сайта</a></li>
+          </ul>
+        </div>
+        <div class="row-3"> <h:graphicImage library="images" name="slogan.gif" />  
+        </div>
+      </div>
+      <!-- CONTENT -->
+      <div id="content">
+        <div class="inner_copy">More <a href="#">Website Templates</a> @ Templates.com!</div>
+        <div class="tail-right">
+          <div class="wrapper">
+            <div class="col-1">
+              <div class="indent">
+                <div class="indent1">
+                  <h3>Welcome to Our Company!</h3>
+                  <p>If you are looking for perfect IT services for your business, you will find them here!</p>
+                  <p>IT Technologies Site is a free websites template created by Templates.com team. This website template is optimized for 1024X768 screen resolution. It is also XHTML &amp; CSS valid.</p>
+                  <p>The website template goes with two packages – with PSD source files and without them. PSD source files are available for free for the registered members of Templates.com. The basic package (without PSD is available for anyone without registration).</p>
+                  <p class="p0">This website template has several pages: <a href="#">Home</a>, <a href="#">About us</a>, <a href="#">Services</a>, <a href="#">Support</a>, <a href="#">Contact us</a> (note that contact us form – doesn’t work), <a href="#">Site Map</a>.</p>
+                </div>
+                
+                  
+          <h:form id="send-form" enctype="multipart/form-data">
+          <p:outputLabel value="Выберите карту для передачи на сервер"/>
             
             <br></br>
             <br></br>
         
-            <p:outputLabel id="showHelp" value="Таблица:"/>
-           <!-- <p:inputText id="dataToServer" required="true" requiredMessage="Укажите название таблицы"  value="#{mapBean.naviData.tableName}"/> -->
+          <!-- <p:outputLabel id="showHelp" value="Таблица:"/>
+           <p:inputText id="dataToServer" required="true" requiredMessage="Укажите название таблицы"  value="#{mapBean.naviData.tableName}"/> 
             <br/>
+            -->
             
             
             <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table}" >
@@ -43,7 +87,40 @@
             
             
             <br></br>
-        </h:form>
-    </h:body>
+            
+          </h:form>
+          <br/>
+                
+                <h4>Recent Articles</h4>
+                <ul class="list">
+                  <li><strong><a href="#">Welcome To our Company</a></strong>If you are looking for perfect IT services for your business, you will find them here!</li>
+                  <li><strong><a href="#">Our services</a></strong>The complete information regarding our services you will find on the "Service" page.</li>
+                  <li><strong><a href="#">About IT Technologies Website</a></strong>Free 1028X768 Optimized Website Template from Templates.com! We hope that you will like this template and use for your websites.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-2">
+              <ul>
+                <li><strong><a href="#">February 15, 2010</a></strong>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</li>
+                <li><strong><a href="#">January 31, 2010</a></strong>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.</li>
+                <li><strong><a href="#">January 22, 2010</a></strong>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugitd quia.</li>
+                <li><strong><a href="#">January 14, 2010</a></strong>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FOOTER -->
+      <div id="footer">
+        <div class="indent">
+         <!-- <div class="fleft">Designed by: <a href="http://www.templates.com"><h:graphicImage value="resources/images/templates-logo.gif" styleClass="fill"/></a>&nbsp; Your 3D Models Marketplace</div> -->
+          <div class="fright">Copyright - Daniil Matafonov </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"> Cufon.now(); </script>
+</h:body>
 </html>
 
