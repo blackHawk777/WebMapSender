@@ -37,9 +37,10 @@ import org.primefaces.event.SelectEvent;
 
 import com.daniel.data.DataSender;
 import com.daniel.db.DBManager;
+import com.daniel.model.CompanyData;
 import com.daniel.processimage.ImageManager;
 import com.vano.clientserver.NavigationData;
-import com.vano.clientserver.Table;
+import com.daniel.model.Table;
 
 
 
@@ -55,15 +56,18 @@ public class MapsManagedBean implements Serializable {
 	
 	public MapsManagedBean() throws SQLException
 	{
+		
+		c_data = new CompanyData();
 		ds = new DataSender();
 		db = new DBManager();
 		naviData = new NavigationData();
 		fillListOfTables();
+		fillListOfCompanyDatas();
 	}
 
-    
     private NavigationData naviData;
     DBManager db;
+    private CompanyData c_data;
     DataSender ds;
     private Table tableSelected;
     private Part file;
@@ -73,6 +77,7 @@ public class MapsManagedBean implements Serializable {
     public static final String WiFiNavigatorUri = "http://wifinavigatorapp-municipalpayment.rhcloud.com/WiFiNavigatorSite/downloadPlan";
     int NetworkConnectionTimeout_ms = 500000;
     private ArrayList<Table> tables = new ArrayList<Table>();
+    private ArrayList<CompanyData> companyDatas = new ArrayList<CompanyData>();
     
     
     public void fillListOfTables() throws SQLException
@@ -80,6 +85,20 @@ public class MapsManagedBean implements Serializable {
     	setTables(db.fillListOfTables());
     }
    
+    public void fillListOfCompanyDatas() throws SQLException
+    {
+    	setCompanyDatas(db.fillListOfCompanyData());
+    }
+    
+    
+    public String checkForCompanyResult()
+    {
+    	if(tableSelected==null)
+    		return "";
+    	else
+    		return "Карта успешно создана";
+    }
+    
     public String nameOfTable()
     {
     	String name="";
@@ -93,6 +112,7 @@ public class MapsManagedBean implements Serializable {
           
             try
             {
+            	db.insertCompanyData(c_data);
             	naviData.setTableName(nameOfTable());
             	NavigationData nd = db.selectDataFromDB(naviData, getFile());
             	ds.sendNavigationData(nd);
@@ -105,6 +125,7 @@ public class MapsManagedBean implements Serializable {
         
     }
     
+
     
    /* private void sendNavigationData(NavigationData nd) throws IOException{
 	    HttpParams params = new BasicHttpParams();    
@@ -200,9 +221,6 @@ public class MapsManagedBean implements Serializable {
 
 
 
-
-
-
 	public ArrayList<Table> getTables() {
 		return tables;
 	}
@@ -217,6 +235,24 @@ public class MapsManagedBean implements Serializable {
 
 	public void setTableSelected(Table tableSelected) {
 		this.tableSelected = tableSelected;
+	}
+
+	
+
+	public ArrayList<CompanyData> getCompanyDatas() {
+		return companyDatas;
+	}
+
+	public void setCompanyDatas(ArrayList<CompanyData> companyDatas) {
+		this.companyDatas = companyDatas;
+	}
+
+	public CompanyData getC_data() {
+		return c_data;
+	}
+
+	public void setC_data(CompanyData c_data) {
+		this.c_data = c_data;
 	}
 
 

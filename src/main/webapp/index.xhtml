@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
       
     <h:head>
-        <title>Отправление карты помещения</title>
+        <title>NaviN</title>
         <h:outputStylesheet library="css" name="style.css" />
         <h:outputScript library="js" name="js/cufon-yui.js" />
         <h:outputScript library="js" name="js/cufon-replace.js"/>
@@ -22,15 +22,15 @@
         <div class="extra"> <h:graphicImage library="images" name="header-img.jpg"/> </div>
         <div class="row-1">
           <div class="fleft"><a href="#"> <h:graphicImage library="images" name="logo.gif" /> </a></div>
-          <div class="fright"><h:graphicImage library="images" name="phone.gif"/></div>
+         <!-- <div class="fright"><h:graphicImage library="images" name="phone.gif"/></div> -->
         </div>
         <div class="row-2">
           <ul>
-            <li class="m1"><a href="index.xhtml" class="active">На главную</a></li>
-            <li class="m2"><a href="about-us.xhtml">О сайте</a></li>
-            <li class="m3"><a href="support.xhtml">Поддержка</a></li>
-            <li class="m4"><a href="contact.xhtml">Контакты</a></li>
-            <li class="m5"><a href="sitemap.xhtml">Карта сайта</a></li>
+			<li class="m1"><a href="index.xhtml" class="active">На главную</a></li>
+            <li class="m2"><a href="about-us.xhtml">О нас</a></li>
+            <li class="m4"><a href="result.xhtml">Компании</a></li> 
+         <!--  <li class="m4"><a href="contacts.xhtml">Контакты</a></li> -->
+            <li class="m5"><a href="register_building.xhtml">Регистрация</a></li>
           </ul>
         </div>
         <div class="row-3"> <h:graphicImage library="images" name="slogan.gif" />  
@@ -44,14 +44,10 @@
             <div class="col-1">
               <div class="indent">
                 <div class="indent1">
-                  <h3>Welcome to Our Company!</h3>
-                  <p>If you are looking for perfect IT services for your business, you will find them here!</p>
-                  <p>IT Technologies Site is a free websites template created by Templates.com team. This website template is optimized for 1024X768 screen resolution. It is also XHTML &amp; CSS valid.</p>
-                  <p>The website template goes with two packages – with PSD source files and without them. PSD source files are available for free for the registered members of Templates.com. The basic package (without PSD is available for anyone without registration).</p>
-                  <p class="p0">This website template has several pages: <a href="#">Home</a>, <a href="#">About us</a>, <a href="#">Services</a>, <a href="#">Support</a>, <a href="#">Contact us</a> (note that contact us form – doesn’t work), <a href="#">Site Map</a>.</p>
+                  <h3>Добро пожаловать!</h3>
+                  <p>Если вы хотите найти дорогу в бизнес - центре, библиотеке, аэропорту, Вы можете воспользоваться нашим сервисом!</p>
                 </div>
-                
-                  
+                      
           <h:form id="send-form" enctype="multipart/form-data">
           <p:outputLabel value="Выберите карту для передачи на сервер"/>
             
@@ -91,7 +87,7 @@
           </h:form>
           <br/>
                 
-                <h4>Recent Articles</h4>
+                <h4>Последние статьи</h4>
                 <ul class="list">
                   <li><strong><a href="#">Welcome To our Company</a></strong>If you are looking for perfect IT services for your business, you will find them here!</li>
                   <li><strong><a href="#">Our services</a></strong>The complete information regarding our services you will find on the "Service" page.</li>
@@ -114,7 +110,7 @@
       <div id="footer">
         <div class="indent">
          <!-- <div class="fleft">Designed by: <a href="http://www.templates.com"><h:graphicImage value="resources/images/templates-logo.gif" styleClass="fill"/></a>&nbsp; Your 3D Models Marketplace</div> -->
-          <div class="fright">Copyright - Daniil Matafonov </div>
+          <div class="fright">Copyright &nbsp; - Даниил Матафонов </div>
         </div>
       </div>
     </div>

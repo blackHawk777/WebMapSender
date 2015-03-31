@@ -1,19 +1,18 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-    	<title>Компании</title>
-        <h:outputStylesheet library="css" name="style.css" />
-        <h:outputScript library="js" name="js/cufon-yui.js" />
-        <h:outputScript library="js" name="js/cufon-replace.js"/>
-        <h:outputScript library="js" name="js/Myriad_Pro_300.font.js" />
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
-    </h:head>
-    
-  <h:body id="page1">
+<h:head>
+<title>Регистрация объекта</title>
+<h:outputStylesheet library="css" name="style.css" />
+<h:outputScript library="js" name="js/cufon-yui.js" />
+<h:outputScript library="js" name="js/cufon-replace.js"/>
+<h:outputScript library="js" name="js/Myriad_Pro_300.font.js" />
+</h:head>
+
+<h:body id="page1">
 <div class="tail-top">
   <div class="tail-bottom">
     <div class="body-bg">
@@ -22,13 +21,14 @@
         <div class="extra"> <h:graphicImage library="images" name="header-img.jpg"/> </div>
         <div class="row-1">
           <div class="fleft"><a href="#"> <h:graphicImage library="images" name="logo.gif" /> </a></div>
-        <!--  <div class="fright"><h:graphicImage library="images" name="phone.gif"/></div> -->
+         <!-- <div class="fright"><h:graphicImage library="images" name="phone.gif"/></div> -->
         </div>
         <div class="row-2">
           <ul>
 			<li class="m1"><a href="index.xhtml" class="active">На главную</a></li>
             <li class="m2"><a href="about-us.xhtml">О нас</a></li>
             <li class="m4"><a href="result.xhtml">Компании</a></li> 
+          <!-- <li class="m4"><a href="contacts.xhtml">Контакты</a></li> -->
             <li class="m5"><a href="register_building.xhtml">Регистрация</a></li>
           </ul>
         </div>
@@ -37,29 +37,69 @@
       </div>
       <!-- CONTENT -->
       <div id="content">
+        <div class="inner_copy">More <a href="#">Website Templates</a> @ Templates.com!</div>
         <div class="tail-right">
           <div class="wrapper">
             <div class="col-1">
               <div class="indent">
                 <div class="indent1">
-           		
-           		<h:form id="company_list">
-           		<p:outputLabel id="s_result" value="#{mapBean.checkForCompanyResult()}"/>
-           		
-           		<p:dataTable id="cd_data_table" var="company" value="#{mapBean.companyDatas}" >
-           		
-           		<p:column headerText="Название компании" >
-           		<h:outputText value="#{company.company_name}" />
-           		</p:column>
-           		
-           		<p:column headerText="Адрес">
-           		<h:outputText value="#{company.company_address}" />
-           		</p:column>
-           		</p:dataTable>
-           		
-           		</h:form>
-           		
-                </div>     
+                  <h3>Добро пожаловать!</h3>
+                  <p>На этой странице вы можете зарегистрировать объект, использующий систему Navin </p>
+                </div>
+                
+                  
+          <h:form id="reg_form" enctype="multipart/form-data" acceptcharset="UTF-8" >
+          
+          	<p:outputLabel value="Название компании" />
+          	<br/>
+          	<br/>
+          	
+          	<p:inputText id="c_name" value="#{mapBean.c_data.company_name}" size="35" />
+	        <br/>
+	        <br/>
+	        
+	        <p:outputLabel value="Адрес компании" />
+	        <br/>
+	        <br/>
+	        
+	        <p:inputTextarea id="c_address" value="#{mapBean.c_data.company_address}" cols="40" rows="5" />
+	        <br/>
+	        <br/>
+	        
+	        <p:outputLabel value="Кратко о компании" />
+	        <br/>
+	        <br/>
+	        
+	        <p:inputTextarea id="c_description" value="#{mapBean.c_data.company_description}" cols="40" rows="5" />
+            
+            <br></br>
+            <br></br>
+           <p:outputLabel value="Укажите набор данных" />
+           <br/> 
+		            
+           <p:dataTable id="dataTable"  value="#{mapBean.tables}" var="table" selection="#{mapBean.tableSelected}" selectionMode="single" rowKey="#{table}" >
+           <p:column headerText="Таблицы с сигналами RSSI ">
+            	<h:outputText value="#{table.table}">
+            	</h:outputText>
+           </p:column>
+          
+           </p:dataTable>
+            
+            <br/>
+            <br/>  
+
+            <h:inputFile id="uploadMap" value="#{mapBean.file}" required="true" requiredMessage="Загрузите карту в формате PNG "/>
+            <p:message for="uploadMap" display="text"/>
+            
+            <br/>
+            <br/>
+            <p:commandButton action="#{mapBean.uploadData()}" value="Отправить" ajax="false" />
+            
+            
+            <br/>
+          </h:form>
+          
+          <br/>
           <br/>
                 
                 <h4>Последние обновления</h4>
@@ -84,7 +124,7 @@
       <!-- FOOTER -->
       <div id="footer">
         <div class="indent">
-          <div class="fleft">Designed by: <a href=""><h:graphicImage value="resources/images/templates-logo.gif" alt="Лого компании" styleClass="fill"/></a>&nbsp; </div>
+          <div class="fleft">Designed by: <a href=""><h:graphicImage value="resources/images/templates-logo.gif" alt="Лого компании" /></a>&nbsp; </div> 
           <div class="fright">Copyright &nbsp; - Даниил Матафонов </div>
         </div>
       </div>
@@ -93,5 +133,5 @@
 </div>
 <script type="text/javascript"> Cufon.now(); </script>
 </h:body>
+	
 </html>
-

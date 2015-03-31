@@ -7,7 +7,7 @@ package com.daniel.db;
 
 
 import com.vano.clientserver.NavigationData;
-import com.vano.clientserver.Table;
+import com.daniel.model.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.Part;
 
+import com.daniel.model.CompanyData;
 import com.daniel.processimage.ImageManager;
 import com.mysql.jdbc.DatabaseMetaData;
 import com.mysql.jdbc.Driver;
@@ -40,7 +41,9 @@ public class DBManager {
     public ArrayList<Integer> signals2 = new ArrayList<Integer>();
     int columnsCount=0;
     public ImageManager im = new ImageManager();
-    public ArrayList<Table> listOfTables = new ArrayList<Table>();
+    private ArrayList<Table> listOfTables = new ArrayList<Table>();
+    private ArrayList<CompanyData> companyDatas = new ArrayList<CompanyData>();
+    
    
   
     public DBManager() throws SQLException
@@ -61,6 +64,45 @@ public class DBManager {
     	setOfTables.close();
     	return listOfTables;
     }
+    
+    public ArrayList<CompanyData> fillListOfCompanyData() throws SQLException
+    {
+    	connection=openConnection();
+    	sqlQuery=connection.prepareStatement("SELECT company_name, company_address FROM company_information;");
+    	ResultSet set = sqlQuery.executeQuery();
+    	while(set.next())
+    	{
+    		companyDatas.add(new CompanyData(String.valueOf(set.getObject(1)),String.valueOf(set.getObject(2))));
+    	}
+    	set.close();
+		return companyDatas;
+    }
+    
+    public boolean insertCompanyData(CompanyData data) throws SQLException
+    {
+    	boolean ins_flag = true;
+    	try{
+    		connection=openConnection();
+	    	sqlQuery = connection.prepareStatement("INSERT INTO company_information (company_name,company_address,company_description) VALUES (?,?,?);");
+	    	sqlQuery.setString(1, String.valueOf(data.getCompany_name()));
+	    	sqlQuery.setString(2, String.valueOf(data.getCompany_address()));
+	    	sqlQuery.setString(3, String.valueOf(data.getCompany_description()));
+	    	sqlQuery.executeUpdate();
+	    	sqlQuery.close();
+    	}
+    	catch(Exception e)
+    	{
+    		ins_flag=false;
+    		e.printStackTrace();
+    	}
+    	
+    	finally
+    	{
+    		connection.close();
+    	}
+    	return ins_flag;
+    }
+    
     
     public Connection openConnection() throws SQLException
     {
