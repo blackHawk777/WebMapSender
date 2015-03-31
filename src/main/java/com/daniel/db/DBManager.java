@@ -107,7 +107,7 @@ public class DBManager {
     public Connection openConnection() throws SQLException
     {
        // setConnection(DriverManager.getConnection("jdbc:mysql://localhost/maps", "root", "root"));
-        setConnection(DriverManager.getConnection("jdbc:mysql://127.8.30.2:3306/webmapserveropenshift", "adminnLWnL6l", "HjcFyIfg5c8s"));
+        setConnection(DriverManager.getConnection("jdbc:mysql://127.8.30.2:3306/webmapserveropenshift?useUnicode=true&characterEncoding=UTF-8&characterSetResults=utf8", "adminnLWnL6l", "HjcFyIfg5c8s"));
         return getConnection();
         
     }
