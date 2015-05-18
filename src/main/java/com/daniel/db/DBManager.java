@@ -6,25 +6,25 @@
 package com.daniel.db;
 
 
-import com.vano.clientserver.NavigationData;
-import com.daniel.model.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.Part;
 
 import com.daniel.model.CompanyData;
+import com.daniel.model.Table;
 import com.daniel.processimage.ImageManager;
 import com.mysql.jdbc.DatabaseMetaData;
 import com.mysql.jdbc.Driver;
-
-import java.sql.ResultSetMetaData;
+import com.vano.clientserver.NavigationData;
 
 /**
  *
@@ -45,11 +45,6 @@ public class DBManager {
     private ArrayList<CompanyData> companyDatas = new ArrayList<CompanyData>();
     
    
-  
-    public DBManager() throws SQLException
-    {
-         DriverManager.registerDriver(new Driver());
-    }
     
     
     public ArrayList<Table> fillListOfTables() throws SQLException
@@ -65,10 +60,45 @@ public class DBManager {
     	return listOfTables;
     }
     
+    
+    public void saveRSSISignalsToDB(Map map, ArrayList<String> valueList) throws SQLException
+    {
+    	String saveQuery="";
+    	byte[]mas;
+    	Iterator iterator = map.entrySet().iterator();
+    	mas = new byte[map.size()];
+    	while(iterator.hasNext())
+    	{
+    		Map.Entry entry = (Map.Entry)iterator.next();
+    		mas = (byte[])entry.getValue();
+    		for (int i=0;i<mas.length;i++)
+    		{
+    			valueList.add(new String(mas));
+    		}
+    		
+    	}
+    	
+    	Statement st = openConnection().createStatement();
+    	st.execute(valueList.get(0));
+    	String queryExistsTable="SELECT * FROM RSSIData;";
+    	ResultSet set = st.executeQuery(queryExistsTable);
+    	if(!set.next())
+    	{
+    		for(int j=1;j<valueList.size();j++)
+    		{
+    			saveQuery=""+ valueList.get(j);
+    			st.execute(saveQuery);
+    		}
+    	}
+    	openConnection().close();
+    	
+    	
+    }
+    
+    
     public ArrayList<CompanyData> fillListOfCompanyData() throws SQLException
     {
-    	connection=openConnection();
-    	sqlQuery=connection.prepareStatement("SELECT company_name, company_address FROM company_information;");
+    	sqlQuery=openConnection().prepareStatement("SELECT company_name, company_address FROM company_information;");
     	ResultSet set = sqlQuery.executeQuery();
     	while(set.next())
     	{
@@ -82,8 +112,7 @@ public class DBManager {
     {
     	boolean ins_flag = true;
     	try{
-    		connection=openConnection();
-	    	sqlQuery = connection.prepareStatement("INSERT INTO company_information (company_name,company_address,company_description) VALUES (?,?,?);");
+	    	sqlQuery = openConnection().prepareStatement("INSERT INTO company_information (company_name,company_address,company_description) VALUES (?,?,?);");
 	    	sqlQuery.setString(1, String.valueOf(data.getCompany_name()));
 	    	sqlQuery.setString(2, String.valueOf(data.getCompany_address()));
 	    	sqlQuery.setString(3, String.valueOf(data.getCompany_description()));
@@ -98,7 +127,7 @@ public class DBManager {
     	
     	finally
     	{
-    		connection.close();
+    		getConnection().close();
     	}
     	return ins_flag;
     }
@@ -107,8 +136,9 @@ public class DBManager {
     public Connection openConnection() throws SQLException
     {
        // setConnection(DriverManager.getConnection("jdbc:mysql://localhost/maps", "root", "root"));
-        setConnection(DriverManager.getConnection("jdbc:mysql://127.8.30.2:3306/webmapserveropenshift?useUnicode=true&characterEncoding=UTF-8&characterSetResults=utf8", "adminnLWnL6l", "HjcFyIfg5c8s"));
-        return getConnection();
+    	DriverManager.registerDriver(new Driver());
+    	setConnection(DriverManager.getConnection("jdbc:mysql://127.8.30.2:3306/webmapserveropenshift?useUnicode=true&characterEncoding=UTF-8&characterSetResults=utf8", "adminnLWnL6l", "HjcFyIfg5c8s"));
+    	return getConnection();
         
     }
     
@@ -150,11 +180,11 @@ public class DBManager {
         }
         finally
         {
-            if (openConnection()!=null)
+            if (getConnection()!=null)
             {
                 try
                 {
-                    openConnection().close();
+                    getConnection().close();
                 }
                 catch(Exception e)
                 {
@@ -165,17 +195,15 @@ public class DBManager {
         return data;
     }
 
-    /**
-     * @return the connection
-     */
-    public Connection getConnection() {
-        return connection;
-    }
 
-    /**
-     * @param connection the connection to set
-     */
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+	public Connection getConnection() {
+		return connection;
+	}
+
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+   
 }
