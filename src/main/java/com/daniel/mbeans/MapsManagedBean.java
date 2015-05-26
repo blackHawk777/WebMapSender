@@ -166,7 +166,7 @@ public class MapsManagedBean implements Serializable {
                 
             }
        if(objectsent)
-           return "result.xhtml";
+           return "index.xhtml";
        else
     	   return "errorPage.xhtml";
     }
